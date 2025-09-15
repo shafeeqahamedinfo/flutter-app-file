@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:animate_do/animate_do.dart';
 import 'dart:math';
 
 void main() {
@@ -12,7 +13,11 @@ class LoanCalculatorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Loan Calculator',
-      theme: ThemeData(primarySwatch: Colors.grey),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: "Poppins",
+        primarySwatch: Colors.blue,
+      ),
       home: const LoanCalculatorScreen(),
     );
   }
@@ -57,66 +62,127 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Loan Calculator"),
-        backgroundColor: Colors.yellow
-        
-        ),
+        title: const Text("💰 Loan Calculator"),
+        backgroundColor: const Color.fromARGB(221, 238, 236, 236),
+      ),
       body: Container(
-        color: const Color.fromARGB(255, 201, 59, 59), // ✅ Light grey background
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF1E1E2C), Color(0xFF2D2D44)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: loanController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Loan Amount",
-                border: OutlineInputBorder(),
-                filled: true,
-                fillColor: Color.fromARGB(255, 131, 149, 233), // ✅ White background
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              FadeInUp(
+                duration: const Duration(milliseconds: 600),
+                child: TextField(
+                  controller: loanController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: "Loan Amount",
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: rateController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Interest Rate (%)",
-                border: OutlineInputBorder(),
-                filled: true,
-                fillColor: Color.fromARGB(255, 84, 182, 65), // ✅ White background
+              const SizedBox(height: 12),
+              FadeInUp(
+                duration: const Duration(milliseconds: 700),
+                child: TextField(
+                  controller: rateController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: "Interest Rate (%)",
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: tenureController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Tenure (Years)",
-                border: OutlineInputBorder(),
-                filled: true,
-                fillColor: Colors.white, // ✅ White background
+              const SizedBox(height: 12),
+              FadeInUp(
+                duration: const Duration(milliseconds: 800),
+                child: TextField(
+                  controller: tenureController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: "Tenure (Years)",
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: calculateLoan,
-              child: const Text("Calculate EMI"),
-            ),
-            const SizedBox(height: 20),
-            if (emi > 0)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Monthly EMI: ₹${emi.toStringAsFixed(2)}",
-                      style: const TextStyle(fontSize: 18)),
-                  Text("Total Interest: ₹${totalInterest.toStringAsFixed(2)}",
-                      style: const TextStyle(fontSize: 18)),
-                  Text("Total Payment: ₹${totalPayment.toStringAsFixed(2)}",
-                      style: const TextStyle(fontSize: 18)),
-                ],
-              )
-          ],
+              const SizedBox(height: 20),
+              FadeInUp(
+                duration: const Duration(milliseconds: 900),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: const Color(0xFFD4AF37), // Gold button
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 5,
+                    ),
+                    onPressed: calculateLoan,
+                    child: const Text(
+                      "Calculate EMI",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              if (emi > 0)
+                BounceIn(
+                  duration: const Duration(milliseconds: 800),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 8,
+                          offset: const Offset(2, 4),
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Monthly EMI: ₹${emi.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                        const SizedBox(height: 6),
+                        Text("Total Interest: ₹${totalInterest.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.redAccent)),
+                        const SizedBox(height: 6),
+                        Text("Total Payment: ₹${totalPayment.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.green)),
+                      ],
+                    ),
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );
