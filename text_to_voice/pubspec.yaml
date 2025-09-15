@@ -1,0 +1,32 @@
+name: text_to_voice
+description: A new Flutter project
+publish_to: "none"
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  animate_do: ^4.2.0
+  flutter:
+    sdk: flutter
+  flutter_tts: ^4.2.3
+  flutter_launcher_icons: ^0.14.1
+  get: ^4.6.5
+  google_fonts: ^5.0.0  
+
+  # your other dependencies here
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  # your other dev dependencies here  
+
+                    
+flutter:
+  uses-material-design: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/text.png"
